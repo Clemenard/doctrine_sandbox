@@ -36,6 +36,8 @@ use Doctrine\ORM\Cache\Region;
  */
 class DefaultRegion implements Region
 {
+    const REGION_KEY_SEPARATOR = '_';
+
     /**
      * @var CacheAdapter
      */
@@ -84,7 +86,7 @@ class DefaultRegion implements Region
      */
     public function contains(CacheKey $key)
     {
-        return $this->cache->contains($this->name . '_' . $key->hash);
+        return $this->cache->contains($this->getCacheEntryKey($key));
     }
 
     /**
@@ -92,7 +94,13 @@ class DefaultRegion implements Region
      */
     public function get(CacheKey $key)
     {
-        return $this->cache->fetch($this->name . '_' . $key->hash) ?: null;
+        $entry = $this->cache->fetch($this->getCacheEntryKey($key));
+
+        if (! $entry instanceof CacheEntry) {
+            return null;
+        }
+
+        return $entry;
     }
 
     /**
@@ -100,30 +108,29 @@ class DefaultRegion implements Region
      */
     public function getMultiple(CollectionCacheEntry $collection)
     {
-        $keysToRetrieve = array();
+        $result = [];
 
-        foreach ($collection->identifiers as $index => $key) {
-            $keysToRetrieve[$index] = $this->name . '_' . $key->hash;
-        }
+        foreach ($collection->identifiers as $key) {
+            $entryKey   = $this->getCacheEntryKey($key);
+            $entryValue = $this->cache->fetch($entryKey);
 
-        $items = array_filter(
-            array_map([$this->cache, 'fetch'], $keysToRetrieve),
-            function ($retrieved) {
-                return false !== $retrieved;
+            if (! $entryValue instanceof CacheEntry) {
+                return null;
             }
-        );
 
-        if (count($items) !== count($keysToRetrieve)) {
-            return null;
+            $result[] = $entryValue;
         }
 
-        $returnableItems = array();
+        return $result;
+    }
 
-        foreach ($keysToRetrieve as $index => $key) {
-            $returnableItems[$index] = $items[$key];
-        }
-
-        return $returnableItems;
+    /**
+     * @param CacheKey $key
+     * @return string
+     */
+    protected function getCacheEntryKey(CacheKey $key)
+    {
+        return $this->name . self::REGION_KEY_SEPARATOR . $key->hash;
     }
 
     /**
@@ -131,7 +138,7 @@ class DefaultRegion implements Region
      */
     public function put(CacheKey $key, CacheEntry $entry, Lock $lock = null)
     {
-        return $this->cache->save($this->name . '_' . $key->hash, $entry, $this->lifetime);
+        return $this->cache->save($this->getCacheEntryKey($key), $entry, $this->lifetime);
     }
 
     /**
@@ -139,7 +146,7 @@ class DefaultRegion implements Region
      */
     public function evict(CacheKey $key)
     {
-        return $this->cache->delete($this->name . '_' . $key->hash);
+        return $this->cache->delete($this->getCacheEntryKey($key));
     }
 
     /**

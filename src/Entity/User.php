@@ -19,6 +19,11 @@ class User
     protected $id;
 
     /**
+     * @ORM\OneToMany(targetEntity=Favorite::class, mappedBy="user_id")
+     */
+    protected $favorite;
+
+    /**
      * @ORM\Column(type="string")
      */
     protected $firstname;
@@ -71,5 +76,11 @@ class User
     public function setRole($role)
     {
         $this->role = $role;
+    }
+
+    public function __toString()
+    {
+        $format = "User (id: %s, firstname: %s, lastname: %s, role: %s)\n";
+        return sprintf($format, $this->id, $this->firstname, $this->lastname, $this->role);
     }
 }
