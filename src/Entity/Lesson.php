@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="lesson",
+ * @ORM\Table(name="learn_chapters_link_tutorials",
  *   uniqueConstraints={
  *       @ORM\UniqueConstraint(name="chapter_tutorial_unique", columns={"chapter_id", "tutorial_id"})
  *   }
@@ -17,16 +17,12 @@ class Lesson
 {
     /**
      * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
-     */
-    protected $id;
-    /**
      * @ORM\ManyToOne(targetEntity=Chapter::class, inversedBy="lesson")
      */
     protected $chapter;
 
     /**
+     * @ORM\Id
      * @ORM\ManyToOne(targetEntity=Tutorial::class, inversedBy="lesson")
      */
     protected $tutorial;

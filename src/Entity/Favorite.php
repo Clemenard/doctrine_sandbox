@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="favorite",
+ * @ORM\Table(name="learn_favorites",
  *   uniqueConstraints={
  *       @ORM\UniqueConstraint(name="user_tutorial_unique", columns={"user_id", "tutorial_id"})
  *   }
@@ -17,16 +17,12 @@ class Favorite
 {
     /**
      * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
-     */
-    protected $id;
-    /**
-     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="favorite")
+     * @ORM\ManyToOne(targetEntity="Users/Entity/User", inversedBy="favorite")
      */
     protected $user;
 
     /**
+     * @ORM\Id
      * @ORM\ManyToOne(targetEntity=Tutorial::class, inversedBy="favorite")
      */
     protected $tutorial;

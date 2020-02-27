@@ -6,9 +6,9 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="chapter",
+ * @ORM\Table(name="learn_chapters",
  *   uniqueConstraints={
- *       @ORM\UniqueConstraint(name="collection_wording_unique", columns={"collection_id", "wording"})
+ *       @ORM\UniqueConstraint(name="collection_name_unique", columns={"collection_id", "name"})
  *   }
  *  )
  */
@@ -31,14 +31,13 @@ class Chapter
     /**
      * @ORM\Column(type="string")
      */
-    protected $wording;
+    protected $name;
+    /**
+     * @ORM\Column(type="string")
+     */
+    protected $grade;
 
 
-    public function __toString()
-    {
-        $format = "Chapter (id: %s, collection: %s, lesson: %s, wording: %s)\n";
-        return sprintf($format, $this->id, $this->collection, $this->lesson, $this->wording);
-    }
     public function getId()
     {
         return $this->id;

@@ -8,7 +8,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="tutorial")
+ * @ORM\Table(name="learn_tutorials")
  */
 class Tutorial
 {
@@ -28,7 +28,7 @@ class Tutorial
      */
     protected $lesson;
     /**
-     * @ORM\ManyToOne(targetEntity=User::class)
+     * @ORM\ManyToOne(targetEntity="Users/Entity/User")
      * @ORM\JoinColumn(name="user", referencedColumnName="id", onDelete="CASCADE")
      * @var User
      */
@@ -40,9 +40,74 @@ class Tutorial
     protected $part;
 
     /**
-     * @ORM\Column(type="text")
+     * @ORM\Column(name="title", type="string", length=1000, nullable=false, options={"default":"No title"})
+     * @var string
      */
-    protected $wording;
+    private $title = "No title";
+    /**
+     * @ORM\Column(name="description", type="string", length=1000, nullable=false, options={"default":"No description"})
+     * @var string
+     */
+    private $description = "No description";
+    /**
+     * @ORM\Column(name="duration", type="integer", options={"default":3600})
+     * @var integer
+     */
+    private $duration = 3600; // in seconds
+    /**
+     * @ORM\Column(name="difficulty", type="integer", nullable=false, options={"default":0})
+     * @var integer
+     * difficulty is between 0 and 3
+     */
+    private $difficulty = 0;
+    /**
+     * @ORM\Column(name="lang", type="string", length=100, nullable=true, options={"default":"No lang"})
+     * @var string
+     */
+    private $lang = "No lang";
+    /**
+     * @ORM\Column(name="support", type="integer", nullable=false)
+     * @var integer
+     */
+    private $support;
+    /**
+     * @ORM\Column(name="img", type="string", length=10000, nullable=false, options={"default":"No image"})
+     * @var string
+     */
+    private $img = "No image";
+    /**
+     * @ORM\Column(name="link", type="string", nullable=false, options={"default":"No link"})
+     * @var string
+     */
+    private $link = "no link";
+    /**
+     * @ORM\Column(name="created_at", type="datetime", columnDefinition="TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+     * @var \DateTime
+     */
+    private $createdAt;
+    /**
+     * @ORM\Column(name="updated_at", type="datetime", columnDefinition="TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+     * @var \DateTime
+     */
+    private $updatedAt;
+    /**
+     * @ORM\Column(name="is_deleted", type="boolean", nullable=false, options={"default":false})
+     * @var bool
+     */
+    private $deleted = false;
+
+    /**
+     * @ORM\Column(name="is_microbit", type="boolean", nullable=false, options={"default":false})
+     * @var bool
+     */
+    private $isMicrobit = false;
+
+    /**
+     * @ORM\Column(name="rights", type="integer", nullable=false, options={"default":0})
+     * @var integer
+     * values are between 0 and 2
+     */
+    private $rights = 0;
     public function __construct()
     {
         $this->part = new ArrayCollection();

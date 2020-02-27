@@ -25,9 +25,15 @@ class Collection
     protected $chapter;
 
     /**
-     * @ORM\Column(type="text")
+     * @ORM\Column(name="name_collection", type="string", length=100, nullable=false, options={"default":"Unamed"})
+     * @var string
      */
-    protected $wording;
+    private $nameCollection = "Unamed";
+    /**
+     * @ORM\Column(name="grade_collection", type="string", length=100, nullable=false, options={"default":"Unamed"})
+     * @var string
+     */
+    private $gradeCollection = "Unamed";
     public function __construct()
     {
         $this->chapter = new ArrayCollection();

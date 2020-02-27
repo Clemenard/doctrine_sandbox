@@ -6,9 +6,9 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="part",
+ * @ORM\Table(name="learn_tutorial_parts",
  *   uniqueConstraints={
- *       @ORM\UniqueConstraint(name="index_tutorial_unique", columns={"tutorial_id", "wording"})
+ *       @ORM\UniqueConstraint(name="index_tutorial_unique", columns={"tutorial_id", "indexPart"})
  *   }
  *  )
  */
@@ -16,23 +16,26 @@ class TutorialParts
 {
     /**
      * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
-     */
-    protected $id;
-    /**
      * @ORM\ManyToOne(targetEntity=Tutorial::class, inversedBy="tutorialParts")
      */
     protected $tutorial;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(name="title", type="string", length=1000, nullable=true, options={"default":"No title"})
+     * @var string
      */
-    protected $wording;
+    private $title = "No title";
     /**
-     * @ORM\Column(name="index_order",type="integer")
+     * @ORM\Column(name="content", type="string", length=10000, nullable=false, options={"default":"No content"})
+     * @var string
      */
-    protected $indexOrder;
+    private $content = "no content";
+    /**
+     * @ORM\Id
+     * @ORM\Column(name="indexPart", type="integer", nullable=false, options={"default":0})
+     * @var integer
+     */
+    private $indexPart = 0;
 
 
     public function __toString()
