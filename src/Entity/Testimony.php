@@ -18,6 +18,16 @@ class Testimony
      */
     private $id;
     /**
+     * @ORM\Column(name="name", type="string", length=250, nullable=false)
+     * @var string
+     */
+    private $name;
+    /**
+     * @ORM\Column(name="picture", type="string", length=250, nullable=false)
+     * @var string
+     */
+    private $picture;
+    /**
      * @ORM\Column(name="role_fr", type="string", length=250, nullable=false)
      * @var string
      */
