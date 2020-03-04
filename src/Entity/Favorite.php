@@ -17,7 +17,7 @@ class Favorite
 {
     /**
      * @ORM\Id
-     * @ORM\ManyToOne(targetEntity="Users/Entity/User", inversedBy="favorite")
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="favorite")
      */
     protected $user;
 

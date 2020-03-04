@@ -28,7 +28,7 @@ class Tutorial
      */
     protected $lesson;
     /**
-     * @ORM\ManyToOne(targetEntity="Users/Entity/User")
+     * @ORM\ManyToOne(targetEntity=User::class)
      * @ORM\JoinColumn(name="user", referencedColumnName="id", onDelete="CASCADE")
      * @var User
      */

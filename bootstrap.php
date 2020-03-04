@@ -22,7 +22,7 @@ $dbParams = [
     'charset'  => 'utf8',
     'user'     => 'root',
     'password' => '',
-    'dbname'   => 'poll',
+    'dbname'   => 'mockup_vittascience',
 ];
 
 $config = Setup::createAnnotationMetadataConfiguration(

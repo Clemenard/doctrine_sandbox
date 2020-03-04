@@ -30,11 +30,11 @@ class Comment
      */
     protected $user;
     /**
-     * @ORM\ManyToOne(targetEntity=User::class)
-     * @ORM\JoinColumn(name="user_answered", referencedColumnName="id", onDelete="CASCADE")
-     * @var User
+     * @ORM\ManyToOne(targetEntity=Comment::class)
+     * @ORM\JoinColumn(name="comment_answered", referencedColumnName="id", onDelete="CASCADE")
+     * @var Comment
      */
-    private $userAnswered = null;
+    private $commentAnswered = null;
 
     /**
      * @ORM\Column(type="text")
@@ -90,14 +90,14 @@ class Comment
         $this->user = $user;
     }
 
-    public function getUserAnswered()
+    public function getCommentAnswered()
     {
-        return $this->userAnswered;
+        return $this->commentAnswered;
     }
 
-    public function setUserAnswered($userAnswered)
+    public function setCommentAnswered($commentAnswered)
     {
-        $this->userAnswered = $userAnswered;
+        $this->commentAnswered = $commentAnswered;
     }
 
     public function getWording()

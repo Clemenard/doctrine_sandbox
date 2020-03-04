@@ -8,7 +8,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="collection")
+ * @ORM\Table(name="learn_collections")
  */
 class Collection
 {
